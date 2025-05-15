@@ -1,6 +1,19 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('node:path')
+const ffmpeg_static = require('ffmpeg-static');
+const ffmpeg = require('fluent-ffmpeg');
+
+const unpackedFFmpegBinary = ffmpeg_static.replace(`app.asar${path.sep}`, `app.asar.unpacked${path.sep}`);
+ffmpeg.setFfmpegPath(unpackedFFmpegBinary);
+console.log(unpackedFFmpegBinary,ffmpeg_static)
+const dir = __dirname.replace(`app.asar${path.sep}`, `app.asar.unpacked${path.sep}`);
+ffmpeg(dir+'/test.mp4').save(dir+'/out.mp4');
+console.log(`rendered to ${dir}`)
+
+
+
+
 
 function createWindow () {
   // Create the browser window.
